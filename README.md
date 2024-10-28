@@ -3,6 +3,12 @@
 Simple chatbot shell interface for llm.
 
 
+# Commands
+
+```shell
+    poetry run chainlit run chat.py -w  #run chat interface
+```
+
 # References
 
 - https://platform.openai.com/docs/concepts
