@@ -1,5 +1,7 @@
-from dotenv import dotenv_values
+import os
+from dotenv import load_dotenv
+import chainlit as cl
 
-config = dotenv_values(".env")
+load_dotenv()
 
-print(config)
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
