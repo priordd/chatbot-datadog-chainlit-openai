@@ -1,6 +1,16 @@
 import os
+from openai import AsyncOpenAI
 import chainlit as cl
-from ddtrace.llmobs.decorators import llm, workflow
+
+client = AsyncOpenAI()
+# Instrument the OpenAI client
+cl.instrument_openai()
+
+settings = {
+    "model": "gpt-4o",
+    "temperature": 1,
+    # ... more settings
+}
 
 
 from dotenv import load_dotenv
@@ -8,6 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from ddtrace.llmobs import LLMObs
+from ddtrace.llmobs.decorators import embedding, llm, retrieval, workflow
 
 LLMObs.enable(
     api_key=os.getenv("DD_API_KEY"),
@@ -18,32 +29,17 @@ LLMObs.enable(
     service="llmmode",
 )
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-
-@workflow
-@cl.step(type="tool")
-async def tool():
-    # Fake tool
-    # await cl.sleep(2)
-    return "Response from the tool!"
-
-
-@llm(model_name="claude", name="invoke_llm", model_provider="anthropic")
-@cl.on_message  # this function will be called every time a user inputs a message in the UI
-async def main(message: cl.Message):
-    """
-    This function is called every time a user inputs a message in the UI.
-    It sends back an intermediate response from the tool, followed by the final answer.
-
-    Args:
-        message: The user's message.
-
-    Returns:
-        None.
-    """
-
-    # Call the tool
-    tool_res = await tool()
-
-    await cl.Message(content=tool_res).send()
+@cl.on_message
+async def on_message(message: cl.Message):
+    response = await client.chat.completions.create(
+        messages=[
+            {
+                "content": "You are a helpful bot",
+                "role": "system",
+            },
+            {"content": message.content, "role": "user"},
+        ],
+        **settings
+    )
+    await cl.Message(content=response.choices[0].message.content).send()
