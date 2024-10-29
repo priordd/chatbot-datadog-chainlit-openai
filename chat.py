@@ -30,6 +30,15 @@ LLMObs.enable(
 )
 
 
+@workflow
+@cl.step(type="tool")
+async def tool():
+    # Fake tool
+    # await cl.sleep(2)
+    return "Response from the tool!"
+
+
+@llm(model_name=settings["model"], model_provider="openai")
 @cl.on_message
 async def on_message(message: cl.Message):
     response = await client.chat.completions.create(
