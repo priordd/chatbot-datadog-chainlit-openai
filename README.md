@@ -1,13 +1,14 @@
-# Chatbot: OpenAI + Chainlit
+# Chatbot: Datadog LLM Observability + OpenAI + Chainlit
 
-Simple chatbot shell interface for llm.
+Simple chatbot prompt interface for llm and Datadog LLM Observability demo.
 
 
 # Commands
 
 ```shell
     poetry install
-    poetry run chainlit run chat.py -w  #run chat interface
+    mv env.example .env  # Fill all the required keys
+    poetry run chainlit run chat.py -w  # Run chat interface
 ```
 
 # References
