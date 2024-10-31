@@ -13,6 +13,7 @@ Simple chatbot prompt interface for llm and Datadog LLM Observability demo.
 
 # References
 
+- https://docs.datadoghq.com/llm_observability/
 - https://github.com/Chainlit/chainlit
 - https://platform.openai.com/docs/concepts
 - https://platform.openai.com/api-keys
