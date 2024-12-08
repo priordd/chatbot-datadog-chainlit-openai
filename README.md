@@ -55,17 +55,17 @@ pip install -r requirements.txt
     * Fill all the required keys.
 
 ```shell
-mv env.example .env  # Fill all the required keys
+cp env.example .env  # Fill all the required keys
 ```
 
 ---
 
 ## 🔧 Usage
 
-Run the application:
+Run the chat application:
 
 ```
-python app.py
+chainlit run app.py
 ```
 
 Open your browser and navigate to the Chainlit interface (usually http://localhost:8000).
